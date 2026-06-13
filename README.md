@@ -34,7 +34,7 @@ A native macOS configurator for the **Attack Shark R1** wireless gaming mouse. B
 ## Build
 
 ```sh
-git clone <repo-url>
+git clone https://github.com/berkemir/r1-control-center.git
 cd r1-control-center
 swift build
 bash scripts/make-app.sh
