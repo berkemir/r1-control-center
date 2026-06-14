@@ -37,7 +37,9 @@ struct SettingsView: View {
                     }
                     .padding(20)
                 }
-                Divider()
+                Rectangle()
+                    .fill(.white.opacity(0.12))
+                    .frame(height: 1)
                 applyBar
             } else {
                 ContentUnavailableView {
@@ -149,6 +151,7 @@ struct SettingsView: View {
             .buttonStyle(.borderedProminent).disabled(!isDirty || model.isApplying)
         }
         .padding(.horizontal, 20).padding(.vertical, 12)
+        .background(.ultraThinMaterial)
     }
 
     // MARK: - Helpers
@@ -189,8 +192,14 @@ struct SettingsView: View {
             Toggle("", isOn: isOn).labelsHidden()
         }
         .padding(.horizontal, 14).padding(.vertical, 10)
-        .background(RoundedRectangle(cornerRadius: 10, style: .continuous)
-            .fill(Color.primary.opacity(0.04)))
+        .background(
+            RoundedRectangle(cornerRadius: 10, style: .continuous)
+                .fill(.ultraThinMaterial)
+                .overlay(
+                    RoundedRectangle(cornerRadius: 10, style: .continuous)
+                        .strokeBorder(Color.white.opacity(0.14), lineWidth: 1)
+                )
+        )
     }
 
     @ViewBuilder

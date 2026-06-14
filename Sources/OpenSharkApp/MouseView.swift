@@ -37,11 +37,11 @@ struct MouseView: View {
         ZStack {
             // corpo
             MouseShape()
-                .fill(LinearGradient(colors: [Color.white.opacity(0.10), Color.white.opacity(0.03)],
+                .fill(LinearGradient(colors: [Color.white.opacity(0.18), Color.white.opacity(0.04)],
                                      startPoint: .top, endPoint: .bottom))
-                .background(MouseShape().fill(.regularMaterial))
-                .overlay(MouseShape().stroke(.white.opacity(0.14), lineWidth: 1))
-                .shadow(color: .black.opacity(0.4), radius: 18, y: 8)
+                .background(MouseShape().fill(.ultraThinMaterial))
+                .overlay(MouseShape().stroke(.white.opacity(0.22), lineWidth: 1))
+                .shadow(color: .black.opacity(0.45), radius: 22, y: 10)
 
             // linha separadora sob os botões superiores
             Capsule()

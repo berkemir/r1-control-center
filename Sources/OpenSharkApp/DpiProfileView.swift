@@ -25,7 +25,9 @@ struct DpiProfileView: View {
         VStack(alignment: .leading, spacing: 0) {
             if model.connected {
                 slots
-                Divider()
+                Rectangle()
+                    .fill(.white.opacity(0.12))
+                    .frame(height: 1)
                 applyBar
             } else {
                 ContentUnavailableView {
@@ -72,6 +74,7 @@ struct DpiProfileView: View {
             .buttonStyle(.borderedProminent).disabled(!isDirty || model.isApplying)
         }
         .padding(.horizontal, 20).padding(.vertical, 12)
+        .background(.ultraThinMaterial)
     }
 
     private func slotRow(_ i: Int) -> some View {
@@ -110,10 +113,21 @@ struct DpiProfileView: View {
             .help(isActive ? lm.s.activeSlot : lm.s.setAsActive)
         }
         .padding(.horizontal, 14).padding(.vertical, 10)
-        .background(RoundedRectangle(cornerRadius: 10, style: .continuous)
-            .fill(isActive ? slotColors[i].opacity(0.08) : Color.primary.opacity(0.04)))
-        .overlay(RoundedRectangle(cornerRadius: 10, style: .continuous)
-            .strokeBorder(isActive ? slotColors[i].opacity(0.35) : Color.clear, lineWidth: 1.5))
+        .background(
+            RoundedRectangle(cornerRadius: 10, style: .continuous)
+                .fill(.ultraThinMaterial)
+                .overlay(
+                    RoundedRectangle(cornerRadius: 10, style: .continuous)
+                        .fill(isActive ? slotColors[i].opacity(0.12) : Color.clear)
+                )
+                .overlay(
+                    RoundedRectangle(cornerRadius: 10, style: .continuous)
+                        .strokeBorder(
+                            isActive ? slotColors[i].opacity(0.50) : Color.white.opacity(0.14),
+                            lineWidth: 1.5
+                        )
+                )
+        )
     }
 
     private func syncFromModel() {

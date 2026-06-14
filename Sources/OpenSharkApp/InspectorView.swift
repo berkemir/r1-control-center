@@ -18,10 +18,11 @@ struct InspectorView: View {
     var body: some View {
         VStack(alignment: .leading, spacing: 0) {
             header
-            Divider()
             if model.connected {
                 picker
-                Divider()
+                Rectangle()
+                    .fill(.white.opacity(0.12))
+                    .frame(height: 1)
                 applyBar
             } else {
                 notDetected
@@ -43,7 +44,12 @@ struct InspectorView: View {
         }
         .frame(maxWidth: .infinity, alignment: .leading)
         .padding(20)
-        .background(.regularMaterial)
+        .background(.ultraThinMaterial)
+        .overlay(alignment: .bottom) {
+            Rectangle()
+                .fill(.white.opacity(0.12))
+                .frame(height: 1)
+        }
     }
 
     private var picker: some View {
@@ -79,8 +85,21 @@ struct InspectorView: View {
                 .font(.callout)
                 .frame(maxWidth: .infinity)
                 .padding(.vertical, 8)
-                .background(selected ? Color.accentColor : Color.gray.opacity(0.15),
-                            in: RoundedRectangle(cornerRadius: 8, style: .continuous))
+                .background(
+                    RoundedRectangle(cornerRadius: 8, style: .continuous)
+                        .fill(.ultraThinMaterial)
+                        .overlay(
+                            RoundedRectangle(cornerRadius: 8, style: .continuous)
+                                .fill(selected ? Color.accentColor : Color.clear)
+                        )
+                        .overlay(
+                            RoundedRectangle(cornerRadius: 8, style: .continuous)
+                                .strokeBorder(
+                                    selected ? Color.accentColor.opacity(0.6) : Color.white.opacity(0.18),
+                                    lineWidth: 1
+                                )
+                        )
+                )
                 .foregroundStyle(selected ? .white : .primary)
         }
         .buttonStyle(.plain)
@@ -121,6 +140,7 @@ struct InspectorView: View {
                 .buttonStyle(.borderedProminent).disabled(!isDirty || model.isApplying)
         }
         .padding(.horizontal, 20).padding(.vertical, 12)
+        .background(.ultraThinMaterial)
     }
 
     private var notDetected: some View {

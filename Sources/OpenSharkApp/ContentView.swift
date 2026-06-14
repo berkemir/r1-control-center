@@ -11,11 +11,12 @@ struct ContentView: View {
     var body: some View {
         VStack(spacing: 0) {
             TopBar(model: model, selectedTab: $selectedTab)
-            Divider()
+            Rectangle()
+                .fill(.white.opacity(0.12))
+                .frame(height: 1)
             HStack(spacing: 0) {
                 if selectedTab == .buttons {
                     LeftPanel(model: model)
-                    Divider()
                 }
                 Group {
                     switch selectedTab {
@@ -28,7 +29,14 @@ struct ContentView: View {
             }
         }
         .frame(width: 760, height: 540)
-        .onAppear { model.checkConnection() }
+        .background(VisualEffectView())
+        .onAppear {
+            model.checkConnection()
+            if let window = NSApplication.shared.windows.first {
+                window.isOpaque = false
+                window.backgroundColor = .clear
+            }
+        }
     }
 }
 
@@ -55,7 +63,12 @@ private struct LeftPanel: View {
         }
         .frame(width: 300)
         .frame(maxHeight: .infinity)
-        .background(.regularMaterial)
+        .background(.ultraThinMaterial)
+        .overlay(alignment: .trailing) {
+            Rectangle()
+                .fill(.white.opacity(0.12))
+                .frame(width: 1)
+        }
     }
 }
 
@@ -91,6 +104,13 @@ private struct TopBar: View {
         }
         .padding(.horizontal, 20)
         .padding(.vertical, 14)
+        .background(
+            LinearGradient(
+                colors: [.white.opacity(0.08), .clear],
+                startPoint: .top,
+                endPoint: .bottom
+            )
+        )
         .alert(lm.s.newProfile, isPresented: $showAddAlert) {
             TextField(lm.s.profileNamePlaceholder, text: $newProfileName)
             Button(lm.s.create) {
